@@ -1,183 +1,240 @@
-# FullstackAuth.API
+Fullstack Authentication System
 
-A full-stack authentication and employee management API built with ASP.NET Core, C#, Entity Framework Core, PostgreSQL, ASP.NET Identity, and JWT authentication.
+A secure full-stack user authentication system built with C#, ASP.NET Core, ASP.NET Identity, Entity Framework Core, PostgreSQL, JWT authentication, and React.
 
-The project provides secure user registration and login, role-based authorization, and employee management CRUD operations.
+This project was developed as part of the ArithMatrix Full Stack Development Internship — Task 1: Secure User Authentication.
 
-# Features
+Task 1 Requirements
 
-- User registration
-- Secure password hashing using ASP.NET Identity
-- User login
-- JWT authentication
-- Protected authenticated endpoint
-- Role-based authorization
-- Admin role management
-- Employee CRUD operations
-- PostgreSQL database
-- Entity Framework Core migrations
-- Input validation
-- Proper HTTP status codes
+The application implements:
 
-## Technologies Used
+User registration
+User login
+Secure password hashing
+JWT token-based authentication
+Protected authenticated endpoint
+Input validation
+Appropriate HTTP status codes
+React frontend authentication flow
+Login and logout functionality
+Technologies Used
+Backend
+C#
+ASP.NET Core
+ASP.NET Identity
+Entity Framework Core
+PostgreSQL
+JWT Bearer Authentication
+REST API
+.NET 10
+Frontend
+React
+JavaScript
+Vite
+Axios
+HTML5
+CSS3
+Project Structure
+ArithMatrix/
+│
+├── FullstackAuth.API/
+│   ├── Controllers/
+│   ├── DTOs/
+│   ├── Data/
+│   ├── Models/
+│   ├── Migrations/
+│   ├── Services/
+│   ├── Program.cs
+│   └── appsettings.json
+│
+├── FullstackAuth.Client/
+│   ├── src/
+│   │   ├── components/
+│   │   ├── pages/
+│   │   └── services/
+│   ├── package.json
+│   └── vite.config.js
+│
+├── .gitignore
+└── README.md
+Authentication Features
+1. User Registration
 
-- C#
-- ASP.NET Core
-- ASP.NET Identity
-- JWT (JSON Web Token)
-- Entity Framework Core
-- PostgreSQL
-- REST API
-- .NET 10
+Endpoint:
 
-## Authentication & Authorization
+POST /api/Auth/register
 
-The API uses ASP.NET Identity for user management and password hashing.
+Example request:
 
-Authentication is handled using JWT bearer tokens.
+{
+  "fullName": "John Doe",
+  "email": "john@example.com",
+  "password": "Password123!"
+}
 
-### Authentication Flow
+The API validates the submitted information and uses ASP.NET Identity to securely hash the password before storing the user.
 
-1. A user registers using the `/api/Auth/register` endpoint.
-2. ASP.NET Identity securely hashes and stores the password.
-3. The user logs in using `/api/Auth/login`.
-4. The API verifies the user's credentials.
-5. A JWT token is generated and returned.
-6. The client sends the token using the `Authorization: Bearer <token>` header.
-7. Protected endpoints validate the JWT before allowing access.
+2. User Login
 
-### Roles
+Endpoint:
 
-The API supports role-based authorization.
+POST /api/Auth/login
 
-- **Admin** — can create, update, and delete employees.
-- **Normal User** — can authenticate and access protected resources but cannot perform Admin-only employee operations.
+Example request:
 
-## API Endpoints
+{
+  "email": "john@example.com",
+  "password": "Password123!"
+}
 
-### Authentication
+A successful login returns a JWT token.
 
-| Method | Endpoint | Description | Authentication |
+3. Protected Endpoint
 
-| POST | `/api/Auth/register` | Register a new user | Public |
-| POST | `/api/Auth/login` | Login and receive JWT token | Public |
-| GET | `/api/Auth/me` | Get authenticated user information | JWT required |
+Endpoint:
 
-### Employee Management
+GET /api/Auth/me
 
-| Method | Endpoint | Description | Access |
+The endpoint requires a valid JWT token.
 
-| GET | `/api/Employee` | Get all employees | Authenticated |
-| GET | `/api/Employee/{id}` | Get employee by ID | Authenticated |
-| POST | `/api/Employee` | Create employee | Admin |
-| PUT | `/api/Employee/{id}` | Update employee | Admin |
-| DELETE | `/api/Employee/{id}` | Delete employee | Admin |
+Example authorization header:
 
-## Getting Started
+Authorization: Bearer <JWT_TOKEN>
 
-### Prerequisites
+A request without a valid token is rejected with:
 
-Before running the project, make sure you have:
+401 Unauthorized
+Frontend Authentication Flow
 
-- .NET 10 SDK
-- PostgreSQL
-- Git
+The React frontend provides the following authentication flow:
 
-### Clone the Repository
+Registration ↔ Login → Dashboard
+                         ↓
+                       Logout
+                         ↓
+                       Login
 
-```bash
-git clone <your-github-repository-url>
+The JWT token received after login is stored by the frontend and sent with authenticated API requests.
+
+Validation
+
+The application performs validation during authentication operations.
+
+Examples include:
+
+Required fields
+Email validation
+Password requirements
+Duplicate email checking
+Password confirmation on registration
+Invalid login credentials
+
+Invalid requests return an appropriate 400 Bad Request response where applicable.
+
+HTTP Status Codes
+
+The API uses appropriate HTTP status codes, including:
+
+Status Code	Meaning
+200 OK	Request completed successfully
+400 Bad Request	Invalid input or validation failure
+401 Unauthorized	Authentication is required or credentials are invalid
+Security
+
+The application uses several security mechanisms:
+
+ASP.NET Identity for user management
+Secure password hashing
+JWT Bearer authentication
+Protected authenticated endpoints
+Token-based authorization
+Server-side input validation
+Secrets excluded from the Git repository
+
+Local development secrets are stored separately from the committed configuration using:
+
+appsettings.Development.json
+
+This file is excluded through .gitignore.
+
+Database
+
+The application uses PostgreSQL as its database.
+
+Entity Framework Core is used for database access and migrations.
+
+The database stores authentication-related information managed by ASP.NET Identity, including:
+
+User accounts
+Password hashes
+User roles
+Authentication-related Identity data
+Running the Backend
+Prerequisites
+
+Make sure you have:
+
+.NET 10 SDK
+PostgreSQL
+Git
+Start the API
+
+Navigate to the backend directory:
+
 cd FullstackAuth.API
 
-## Testing
+Run:
 
-The API was tested using the following authentication and authorization scenarios:
+dotnet restore
+dotnet run
 
-### Registration
+The API will run locally using the configured ASP.NET Core development settings.
 
-A new user can register through:
+Running the Frontend
 
-`POST /api/Auth/register`
+Navigate to the frontend directory:
 
-The API validates the submitted data and securely hashes the password using ASP.NET Identity.
+cd FullstackAuth.Client
 
-### Login
+Install dependencies:
 
-A registered user can log in through:
+npm install
 
-`POST /api/Auth/login`
+Start the development server:
 
-Successful login returns a JWT token.
+npm run dev
 
-### Protected Endpoint
+The React application will be available through the Vite development server.
 
-The `/api/Auth/me` endpoint requires a valid JWT token.
+Example Authentication Flow
+A user opens the React application.
+The user creates an account through the registration page.
+The backend validates the registration data.
+ASP.NET Identity securely hashes and stores the password.
+The user logs in.
+The API verifies the credentials.
+The API generates a JWT token.
+The frontend stores the authentication token.
+The token is sent with protected API requests.
+The authenticated user can access the dashboard.
+The user can log out and the authentication token is removed.
+Task 1 Deliverables
 
-Requests without a valid token return:
+This repository contains the implementation for:
 
-`401 Unauthorized`
+Secure user registration
+Secure user login
+Password hashing
+JWT authentication
+Protected authenticated endpoint
+Input validation
+Appropriate HTTP status codes
+React authentication interface
+Login and logout functionality
+PostgreSQL persistence
+Author
 
-### Role-Based Authorization
+Patrick Mueti Isaac
 
-Admin users can:
-
-- Create employees
-- Update employees
-- Delete employees
-
-Normal users cannot perform these Admin-only operations.
-
-Unauthorized Admin operations return:
-
-`403 Forbidden`
-
-### Employee Validation
-
-Employee data is validated before being stored in the database.
-
-Invalid data returns:
-
-`400 Bad Request`
-
-## Database
-
-The application uses PostgreSQL with Entity Framework Core.
-
-The database stores:
-
-- User accounts and authentication data
-- User roles
-- Employee records
-
-Entity Framework Core migrations are used to create and update the database schema.
-
-To apply the latest migrations:
-
-```bash
-dotnet ef database update
-
-## Project Structure
-
-```text
-FullstackAuth.API/
-│
-├── Controllers/
-│   ├── AuthController.cs
-│   └── EmployeeController.cs
-│
-├── Data/
-│   └── AppDbContext.cs
-│
-├── DTOs/
-│   ├── LoginRequest.cs
-│   └── RegisterRequest.cs
-│
-├── Models/
-│   ├── User.cs
-│   └── Employee.cs
-│
-├── Migrations/
-│
-├── Program.cs
-├── appsettings.json
-└── README.md
+BSc Information Technology
+Kirinyaga University
