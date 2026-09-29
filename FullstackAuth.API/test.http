@@ -1,0 +1,125 @@
+### Register
+POST http://localhost:5093/api/Auth/register
+Content-Type: application/json
+
+{
+  "fullName": "Patrick Mueti",
+  "email": "patrick.test@example.com",
+  "userName": "patrick.test@example.com",
+  "password": "Password123!"
+}
+
+### Login
+POST http://localhost:5093/api/Auth/login
+Content-Type: application/json
+
+{
+  "email": "patrick.test@example.com",
+  "password": "Password123!"
+}
+
+### Get current user
+GET http://localhost:5093/api/Auth/me
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjJhNWFjZWI5LTJkZGYtNDUyZC04MmZhLWU4MzI4NGEyY2MxNSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJwYXRyaWNrLnRlc3RAZXhhbXBsZS5jb20iLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJwYXRyaWNrLnRlc3RAZXhhbXBsZS5jb20iLCJleHAiOjE3OTA0MjA0MTQsImlzcyI6IkZ1bGxzdGFja0F1dGguQVBJIiwiYXVkIjoiRnVsbHN0YWNrQXV0aC5DbGllbnQifQ.l-AirQumz_yPWoT-EyOdD5-IdtB8blc6wBOClici0Ho
+
+### Get all employees
+GET http://localhost:5093/api/Employee
+### Create employee
+POST http://localhost:5093/api/Employee
+Content-Type: application/json
+
+{
+  "name": "John Doe",
+  "email": "john@example.com",
+  "phone": "0712345678",
+  "salary": 50000,
+  "department": "IT",
+  "position": "Software Developer"
+}
+
+### Get employee by ID
+GET http://localhost:5093/api/Employee/1
+### Update employee
+### Update employee
+PUT http://localhost:5093/api/Employee/4
+Content-Type: application/json
+
+{
+  "id": 4,
+  "name": "John Updated",
+  "email": "john.updated@example.com",
+  "phone": "0798765432",
+  "salary": 60000,
+  "department": "Software Development",
+  "position": "Senior Developer"
+}
+### Delete employee
+DELETE http://localhost:5093/api/Employee/4
+##### Make user admin
+POST http://localhost:5093/api/Auth/make-admin?email=patrick.test@example.com
+
+### Login as Admin
+POST http://localhost:5093/api/Auth/login
+Content-Type: application/json
+
+{
+  "email": "patrick.test@example.com",
+  "password": "Password123!"
+}
+
+### Create employee - Admin
+POST http://localhost:5093/api/Employee
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjJhNWFjZWI5LTJkZGYtNDUyZC04MmZhLWU4MzI4NGEyY2MxNSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJwYXRyaWNrLnRlc3RAZXhhbXBsZS5jb20iLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJwYXRyaWNrLnRlc3RAZXhhbXBsZS5jb20iLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJBZG1pbiIsImV4cCI6MTc5MDQzMjEwNSwiaXNzIjoiRnVsbHN0YWNrQXV0aC5BUEkiLCJhdWQiOiJGdWxsc3RhY2tBdXRoLkNsaWVudCJ9.2_L8vzlL_iU6IUJSqsq0XPrisEZXpzHMLhPERLyhu-Y
+Content-Type: application/json
+
+{
+  "name": "Jane Doe",
+  "email": "jane@example.com",
+  "phone": "0712345678",
+  "salary": 55000,
+  "department": "IT",
+  "position": "Developer"
+}
+### Register normal user
+POST http://localhost:5093/api/Auth/register
+Content-Type: application/json
+
+{
+  "fullName": "Normal User",
+  "email": "normal@example.com",
+  "userName": "normal@example.com",
+  "password": "Password123!"
+}
+#### Login as normal user
+POST http://localhost:5093/api/Auth/login
+Content-Type: application/json
+
+{
+  "email": "normal@example.com",
+  "password": "Password123!"
+}
+
+#### Create employee - Normal user
+POST http://localhost:5093/api/Employee
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6ImQ3MGUwN2RjLWIxOWEtNGI0Ni05YmY3LTI1ODUzZWQwYjhmYiIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJub3JtYWxAZXhhbXBsZS5jb20iLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJub3JtYWxAZXhhbXBsZS5jb20iLCJleHAiOjE3OTA0MzIyNjgsImlzcyI6IkZ1bGxzdGFja0F1dGguQVBJIiwiYXVkIjoiRnVsbHN0YWNrQXV0aC5DbGllbnQifQ.h1jNHQRCPeBUF-5lzpwkcuTHWR6-PHQswEFfPexsvfk
+Content-Type: application/json
+
+{
+  "email": "normal.employee@example.com",
+  "phone": "0712345678",
+  "salary": 50000,
+  "department": "IT",
+  "position": "Developer"
+}
+###
+POST http://localhost:5093/api/Employee
+Authorization: Bearer YOUR_ADMIN_TOKEN
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "phone": "0712345678",
+  "salary": 40000,
+  "department": "IT",
+  "position": "Developer"
+}

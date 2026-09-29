@@ -1,0 +1,22 @@
+# .NET
+**/bin/
+**/obj/
+**/.vs/
+
+# ASP.NET local secrets
+**/appsettings.Development.json
+
+# Node
+**/node_modules/
+**/dist/
+
+# Environment files
+**/.env
+**/.env.*
+
+# Visual Studio
+*.user
+*.suo
+
+# Logs
+*.log
